@@ -1,28 +1,10 @@
-/*
-if(app.documents.length > 0){
-    alert("There are " + app.documents.length + " open documents");
-}else{
-    alert("There are no open documents");
-}
-*/
 
 #target photoshop  
 app.bringToFront();  
 
-//main();  
-
-// FUNCTIONS
-
-//if(!documents.length) return;  
-////////////////////////////////////////////////////////////////////  
-//hard code your csv file  
-//var CSVfile = File("/c/folderWhatever/fileName.csv");  
-/////// remove this code when file is hard coded  
-// Prompt for SAVE SLUG and OUTPUT LOCATION
-
 var outputFolder = Folder.selectDialog( "Please select output folder");
 var nameSlug = prompt("Please type a SLUG to prepend to the filename.","","Input your text here");
-
+var answer = confirm("Force Uppercase?")
 
 var CSVfile = null;  
 while(CSVfile == null){  
@@ -32,10 +14,15 @@ CSVfile = File.openDialog("Please select CSV file.","CSV File:*.csv");
 CSVfile.open('r');  
 var Data=[];  
 while(!CSVfile.eof){  
+
     Line = CSVfile.readln(); 
-    //if (Line.length > 0) Data.push(Line.toUpperCase());   
+        //if (Line.length > 0) Data.push(Line.toUpperCase());   
     if (Line.length > 0) {
-        text = Line.toUpperCase();
+        if (answer) {
+            text = Line.toUpperCase();
+        } else {
+            text = Line
+        }
 
         if(app.documents.length != 0){
             var doc = app.activeDocument;
@@ -44,6 +31,7 @@ while(!CSVfile.eof){
                 var layer = doc.artLayers[i];
             
                 if(layer.kind == LayerKind.TEXT){
+                    
                     // layer.textItem.font = "ArialMT"; // <---- Can set the font here if we desire.
                     layer.textItem.contents = text; // Use += to append
                 }
@@ -59,13 +47,6 @@ while(!CSVfile.eof){
 }  
 
 
-//var lineLength = Line.length;
-//for (var i = 0; i < lineLength; i++) {
-//    alert(Line[i]);
-    //Do something
-//} ^^ Not needed with the WHILE loop above, we can save
-
-
 if(app.documents.length != 0){
     var doc = app.activeDocument;
     
@@ -74,7 +55,7 @@ if(app.documents.length != 0){
     
         if(layer.kind == LayerKind.TEXT){
             // layer.textItem.font = "ArialMT"; // <---- Can set the font here if we desire.
-            layer.textItem.contents = "Envato"; // Use += to append
+            layer.textItem.contents = "A"; // Use += to append
         }
     }
 }
