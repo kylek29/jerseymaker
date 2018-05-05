@@ -17,9 +17,13 @@ A character set is comprised of the character designs you want saved as individu
 - Remember to turn off the background.
 - Go to File > Scripts > Browse and select "LoadCSVReplaceText.js"
 - The script will ask you to select an output folder.
-- The script will ask you for a prefix to the filename, type "char_".
-- The script will ask you to select a .CSV file. Choose the "a-z.csv" file or add your own (if you want more characters).
+- The script will ask you for a prefix to the filename. I usually use 'chars_' for upper A-Z (and numbers, punctuation) and 'chars_l_' for lower.
+- The script will ask you to select a .CSV file. 
+-- For uppercase A-Z, numbers, and punctation: upper_a-z0-9_chars.csv
+-- For lowercase a-z: lower_a-z.csv
+- The script will ask you if you want to force UPPERCASE on the text.
 - The script will generate individual .PNG's to the output folder. 
+- NOTE: On Linux, more care may need to be taken to make sure the filename is the right case.
 - Move those files to the _components directory under the script folder.
 
 #### Generating nameplate
@@ -33,14 +37,16 @@ A character set is comprised of the character designs you want saved as individu
 
 - Expects the image file to be a transparent background .PNG in RGBA format.
 - Included character set only includes uppercase LETTERS and ".".
-- Currently setup to only do uppercase letters. If you want to do both uppercase and lowercase letters, you'll need to add them to the a-z.csv file (for artwork generation), as well as modify the script to not use the .lower() method in a few places. For the characterset itself, the script will need to be modified to find the characters in a different way as to the [Windows] OS, char_a.png ("a") and char_A.png ("A") will be the same file.
+- Can do uppercase and lowercase numbers, but will clip the lowercase letters that extend outside of the box. This can be changed by creating the letters in photoshop with a larger bounding box.
 
 #### Options
-Within the "create_nameplate" method, you'll find a few options:
+The create_nameplate method has a third optional kwargs element. Defaults are set within the method, but can be overriden by passing in the options you want to override as a dict (example under TEMP Variables) as an unpackable dict (e.g. **kwargs).
 
 - kern_offset | This sets the spacing between each character. Int value, 10px spacing = 10
 - space_offset | This sets the spacing for the " " character [space]. Int value, 10px spacing = 10
 - max_size | This sets the maximum pixel width of the nameplate before it'll resized to fit.
+- force_upper | Whether to force the output to use Uppercase only. Default is true.
+- char_prefix | Prefix to prepend to the Image.Open call for the file. e.g. chars_b.png
 
 ### Methods / Functions
 - resize_image | Takes in an image object and an INT for maximum width, resizes the image object proportionally to fit the max width. Returns the resized image object.
